@@ -881,7 +881,7 @@
                 <button data-view="night" type="button">🌙 Night View</button>
             </div>
             <div class="picture-frame">
-                <img id="galleryImage" src="images/night.png" alt="Dulal Gogoi Girls PG day view" />
+                <img id="galleryImage" src="images/day.png" alt="Dulal Gogoi Girls PG day view" loading="lazy" decoding="async" />
             </div>
             <div class="picture-caption" id="galleryCaption">Day view of the PG</div>
         </section>
@@ -932,6 +932,7 @@
 
             const image = document.getElementById('galleryImage');
             const buttons = document.querySelectorAll('.picture-switcher button');
+            const caption = document.getElementById('galleryCaption');
 
             const captions = {
                 day: 'Day view of the PG',
@@ -939,21 +940,24 @@
             };
 
             const imageMap = {
-                day: 'images/night.png',
-                night: 'images/day.png'
+                day: 'images/day.png',
+                night: 'images/night.png'
+            };
+
+            const setView = (view) => {
+                const safeView = imageMap[view] ? view : 'day';
+                image.src = imageMap[safeView];
+                image.alt = `Dulal Gogoi Girls PG ${safeView} view`;
+                caption.textContent = captions[safeView];
+
+                buttons.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-view') === safeView));
             };
 
             buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const view = button.getAttribute('data-view');
-                    image.src = imageMap[view];
-                    image.alt = `Dulal Gogoi Girls PG ${view} view`;
-                    document.getElementById('galleryCaption').textContent = captions[view];
-
-                    buttons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                });
+                button.addEventListener('click', () => setView(button.getAttribute('data-view')));
             });
+
+            setView('day');
         });
     </script>
 </body>
