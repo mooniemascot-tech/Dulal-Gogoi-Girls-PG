@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dulal Gogoi Girls PG</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #f7efe8;
+            --bg-soft: #fffaf5;
+            --text: #2f241d;
+            --muted: #6f5748;
+            --accent: #a55b3a;
+            --accent-2: #c79b6b;
+            --accent-soft: #f2dfcf;
+            --accent-deep: #5f4338;
+            --card: linear-gradient(145deg, rgba(255, 249, 243, 0.97), rgba(255, 255, 255, 0.95));
+            --line: rgba(139, 88, 62, 0.16);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(234, 205, 181, 0.7), transparent 24%),
+                linear-gradient(135deg, var(--bg), var(--bg-soft));
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            filter: blur(20px);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        body::before {
+            top: -90px;
+            left: -80px;
+            background: rgba(240, 203, 179, 0.45);
+        }
+
+        body::after {
+            right: -70px;
+            bottom: -60px;
+            background: rgba(255, 255, 255, 0.45);
+            animation-delay: -3s;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(250, 225, 214, 0.97), rgba(240, 205, 182, 0.96));
+            border-radius: 2rem;
+            padding: 3rem 2.5rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(135, 86, 57, 0.16);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: -30% 60% auto auto;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: rotate(12deg);
+        }
+
+        .hero::after {
+            content: '✦';
+            position: absolute;
+            right: 1.8rem;
+            bottom: 0.8rem;
+            font-size: 5.4rem;
+            color: rgba(255, 255, 255, 0.28);
+            line-height: 1;
+            pointer-events: none;
+            animation: drift 5s ease-in-out infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 4.4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: #3d2b1f;
+            margin-bottom: 0.45rem;
+        }
+
+        .hero .sub {
+            font-size: 1.08rem;
+            font-weight: 600;
+            color: #5b4032;
+            background: rgba(255, 255, 255, 0.6);
+            display: inline-block;
+            padding: 0.32rem 1.2rem;
+            border-radius: 999px;
+            backdrop-filter: blur(6px);
+            margin-bottom: 0.8rem;
+            box-shadow: 0 8px 18px rgba(104, 69, 48, 0.08);
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+            margin: 0.6rem 0 0.9rem;
+        }
+
+        .hero-badges span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.62);
+            color: #533c2e;
+            font-size: 0.92rem;
+            font-weight: 600;
+            border: 1px solid rgba(110, 72, 54, 0.09);
+            box-shadow: 0 6px 16px rgba(95, 67, 56, 0.06);
+        }
+
+        .hero .meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem 1.4rem;
+            font-size: 0.98rem;
+            color: #4d3729;
+            margin-top: 0.5rem;
+        }
+
+        .hero .meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.42);
+            backdrop-filter: blur(6px);
+        }
+
+        .hero .meta .icon {
+            font-size: 1.05rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 1.4rem;
+            padding: 1.8rem 1.8rem 2rem;
+            box-shadow: 0 14px 36px rgba(95, 67, 56, 0.07);
+            margin-bottom: 1.6rem;
+            border: 1px solid var(--line);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            backdrop-filter: blur(8px);
+            will-change: transform;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -30px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(199, 155, 107, 0.18), transparent 70%);
+            pointer-events: none;
+        }
+
+        .card:hover,
+        .card:focus-within {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 45px rgba(150, 95, 65, 0.12);
+            border-color: rgba(184, 109, 73, 0.24);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            font-size: 1.32rem;
+            font-weight: 700;
+            color: #3d2b1f;
+            letter-spacing: -0.01em;
+        }
+
+        .card-header .emoji {
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
+        .card-header .badge {
+            background: var(--accent-soft);
+            color: #5f412f;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.18rem 0.8rem;
+            border-radius: 999px;
+            letter-spacing: 0.02em;
+            margin-left: 0.2rem;
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        .room-item {
+            background: linear-gradient(145deg, #fcf5ee, #f7e8dd);
+            padding: 1rem 1.2rem;
+            border-radius: 1rem;
+            text-align: center;
+            border: 1px solid rgba(200, 165, 145, 0.18);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+        }
+
+        .room-item:hover,
+        .room-item:active {
+            transform: translateY(-3px) scale(1.01);
+            background: linear-gradient(145deg, #fffdfa, #f8eadf);
+            box-shadow: 0 10px 25px rgba(160, 100, 70, 0.08);
+        }
+
+        .room-item .label {
+            font-weight: 600;
+            color: #3d2b1f;
+            font-size: 1rem;
+        }
+
+        .room-item .price {
+            font-size: 1.28rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-top: 0.2rem;
+        }
+
+        .room-item .price small {
+            font-weight: 500;
+            font-size: 0.8rem;
+            color: #735440;
+        }
+
+        .deposit-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .deposit-list li {
+            padding-left: 1.8rem;
+            position: relative;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .deposit-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .timing-box {
+            background: linear-gradient(135deg, #f6e9e0, #f2dfd4);
+            border-radius: 1rem;
+            padding: 1.1rem 1.25rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(184, 109, 73, 0.14);
+            transition: transform 0.25s ease;
+        }
+
+        .timing-box:hover {
+            transform: translateY(-2px);
+        }
+
+        .timing-box .open {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: #3d2b1f;
+        }
+
+        .timing-box .open span {
+            font-weight: 500;
+            font-size: 0.96rem;
+            color: #5d4232;
+        }
+
+        .timing-box .days {
+            background: rgba(255, 255, 255, 0.75);
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            color: #4d3729;
+            backdrop-filter: blur(6px);
+            white-space: nowrap;
+        }
+
+        .timing-note {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.4rem;
+            font-size: 0.96rem;
+            color: #3d2b1f;
+            background: #faf4f0;
+            padding: 0.95rem 1.1rem;
+            border-radius: 1rem;
+            margin-top: 0.45rem;
+            border: 1px solid rgba(184, 109, 73, 0.12);
+        }
+
+        .timing-note .tag {
+            background: #e7d5cb;
+            padding: 0.1rem 0.7rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #4d3729;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 1rem;
+            border: 1px solid #eee5df;
+            background: #fffdfb;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.98rem;
+        }
+
+        thead {
+            background: #f6e9e0;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.8rem 1.05rem;
+            font-weight: 700;
+            color: #3d2b1f;
+        }
+
+        td {
+            padding: 0.72rem 1.05rem;
+            border-bottom: 1px solid #f0e7e1;
+            color: #2d2a24;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: rgba(245, 237, 232, 0.75);
+        }
+
+        .veg-tag {
+            display: inline-block;
+            background: #dbe8d5;
+            color: #2f5a2a;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.12rem 0.7rem;
+            border-radius: 999px;
+            letter-spacing: 0.02em;
+            margin-left: 0.45rem;
+        }
+
+        .menu-note {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #5a4032;
+            background: #f6e9e0;
+            padding: 0.55rem 1rem;
+            border-radius: 999px;
+            display: inline-block;
+        }
+
+        .rules-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem 1.2rem;
+        }
+
+        .rules-list li {
+            padding: 0.7rem 0.9rem 0.7rem 1.8rem;
+            position: relative;
+            font-size: 0.96rem;
+            color: #2d2a24;
+            background: #faf4f0;
+            border-radius: 0.9rem;
+            border: 1px solid rgba(184, 109, 73, 0.12);
+        }
+
+        .rules-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0.7rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .map-card {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(184, 109, 73, 0.14);
+            box-shadow: 0 10px 24px rgba(95, 67, 56, 0.08);
+            background: #fff;
+        }
+
+        .map-card iframe {
+            width: 100%;
+            min-height: 320px;
+            border: 0;
+            display: block;
+        }
+
+        .map-link {
+            margin-top: 0.9rem;
+        }
+
+        .map-link a {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--accent-deep);
+            font-weight: 700;
+            padding: 0.6rem 1rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #f7e7da, #f0d9c7);
+            box-shadow: 0 6px 16px rgba(95, 67, 56, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .map-link a:hover,
+        .map-link a:active {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(95, 67, 56, 0.1);
+        }
+
+        .picture-switcher {
+            display: inline-flex;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            padding: 0.35rem;
+            border-radius: 999px;
+            background: rgba(247, 234, 221, 0.8);
+            border: 1px solid rgba(184, 109, 73, 0.14);
+            backdrop-filter: blur(6px);
+        }
+
+        .picture-switcher button {
+            border: none;
+            background: transparent;
+            color: var(--accent-deep);
+            padding: 0.6rem 1rem;
+            border-radius: 999px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        .picture-switcher button.active {
+            background: linear-gradient(135deg, var(--accent), #c97f57);
+            color: white;
+            box-shadow: 0 8px 20px rgba(165, 91, 58, 0.2);
+        }
+
+        .picture-switcher button:hover,
+        .picture-switcher button:active {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(95, 67, 56, 0.1);
+        }
+
+        .picture-frame {
+            border-radius: 1.25rem;
+            overflow: hidden;
+            border: 1px solid rgba(184, 109, 73, 0.16);
+            box-shadow: 0 16px 42px rgba(95, 67, 56, 0.12);
+            background: linear-gradient(145deg, #fff8f2, #f6e5d8);
+            position: relative;
+            isolation: isolate;
+        }
+
+        .picture-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.16), transparent 40%, rgba(165, 91, 58, 0.1));
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .picture-frame img {
+            width: 100%;
+            display: block;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.45s ease, opacity 0.35s ease;
+            transform: scale(1.01);
+        }
+
+        .picture-frame:hover img {
+            transform: scale(1.04);
+        }
+
+        .picture-caption {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #6d4f3d;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.85rem 1.6rem;
+            align-items: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 1rem;
+            padding: 0.55rem 0.8rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #fcf3eb, #f8e6d7);
+            border: 1px solid rgba(184, 109, 73, 0.14);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .contact-item:hover,
+        .contact-item:active {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(160, 100, 70, 0.08);
+        }
+
+        .contact-item .emoji {
+            font-size: 1.2rem;
+        }
+
+        .contact-item a {
+            color: #3d2b1f;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .contact-item a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        .contact-email {
+            margin-top: 0.2rem;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.88rem;
+            color: #8f7a6b;
+            padding-top: 1.2rem;
+            border-top: 1px solid #ece2db;
+            margin-top: 1rem;
+        }
+
+        a,
+        button {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            50% {
+                transform: translate3d(12px, -16px, 0) scale(1.04);
+            }
+        }
+
+        @keyframes drift {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 1rem 0.75rem 1.5rem;
+            }
+
+            .hero {
+                padding: 2rem 1.15rem;
+            }
+
+            .hero .meta {
+                flex-direction: column;
+                gap: 0.45rem;
+            }
+
+            .card {
+                padding: 1.3rem 1.05rem 1.45rem;
+            }
+
+            .card-header {
+                font-size: 1.2rem;
+            }
+
+            .room-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .timing-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .contact-grid {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+
+            .map-card iframe {
+                min-height: 260px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .rules-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 440px) {
+            .room-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+        }
+
+        @media (hover: hover) {
+            .card:hover,
+            .room-item:hover,
+            .contact-item:hover {
+                transform: translateY(-3px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ═══ HERO ═══ -->
+        <header class="hero reveal">
+            <h1>Dulal Gogoi Girls PG</h1>
+            <div class="sub">🏡 Safe &bull; Comfortable &bull; Home away from home</div>
+            <div class="hero-badges">
+                <span>🛏️ Spacious rooms</span>
+                <span>🍲 Home-style meals</span>
+                <span>🔐 Safe stay</span>
+            </div>
+            <div class="meta">
+                <span><span class="icon">📅</span> Established: June 2016</span>
+                <span><span class="icon">🚶</span> 10 min walk from JIST College</span>
+            </div>
+        </header>
+
+        <!-- ═══ ROOM RENT ═══ -->
+        <section class="card">
+            <div class="card-header">
+                <span class="emoji">🛏️</span> Room Rent
+                <span class="badge">per month</span>
+            </div>
+            <div class="room-grid">
+                <div class="room-item">
+                    <div class="label">Single Room</div>
+                    <div class="price">₹7,500 <small>/ person</small></div>
+                </div>
+                <div class="room-item">
+                    <div class="label">Two Sharing</div>
+                    <div class="price">₹6,500 <small>/ person</small></div>
+                </div>
+                <div class="room-item">
+                    <div class="label">Three Sharing</div>
+                    <div class="price">₹5,500 <small>/ person</small></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ SECURITY DEPOSIT ═══ -->
+        <section class="card reveal">
+            <div class="card-header">
+                <span class="emoji">🔒</span> Security Deposit
+            </div>
+            <ul class="deposit-list">
+                <li>One month's room rent must be paid as a security deposit along with the first month's rent.</li>
+                <li>The security deposit will be adjusted with the last month's room rent if the student stays for <strong>at least one year</strong>.</li>
+                <li>If a student leaves before completing one year, the security deposit will <strong>not</strong> be refunded. This rule is necessary because seats occupied during the admission period are difficult to fill again before the next academic session.</li>
+            </ul>
+        </section>
+
+        <!-- ═══ PG TIMINGS ═══ -->
+        <section class="card reveal">
+            <div class="card-header">
+                <span class="emoji">⏰</span> PG Timings
+            </div>
+            <div class="timing-box">
+                <div class="open">🕗 7:00 AM – 8:00 PM <span>&nbsp;· Every Day</span></div>
+                <div class="days">📆 Open daily</div>
+            </div>
+            <div class="timing-note">
+                <span>📍 If you need to go anywhere other than college, please inform the owner in advance.</span>
+                <span><span class="tag">🌙</span> Night outings are allowed only with confirmation from parents.</span>
+            </div>
+        </section>
+
+        <!-- ═══ WEEKLY FOOD MENU ═══ -->
+        <section class="card reveal">
+            <div class="card-header">
+                <span class="emoji">🍽️</span> Weekly Food Menu
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Menu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Monday</td><td>Egg</td></tr>
+                        <tr><td>Tuesday</td><td>Vegetarian <span class="veg-tag">🌿 Veg</span></td></tr>
+                        <tr><td>Wednesday</td><td>Meat</td></tr>
+                        <tr><td>Thursday</td><td>Paneer</td></tr>
+                        <tr><td>Friday</td><td>Egg</td></tr>
+                        <tr><td>Saturday</td><td>Vegetarian <span class="veg-tag">🌿 Veg</span></td></tr>
+                        <tr><td>Sunday</td><td>Fish</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="menu-note">🌱 Two days every week are completely vegetarian.</div>
+        </section>
+
+        <!-- ═══ RULES & REGULATIONS ═══ -->
+        <section class="card reveal">
+            <div class="card-header">
+                <span class="emoji">📋</span> Rules &amp; Regulations
+            </div>
+            <ul class="rules-list">
+                <li>Maintain cleanliness and discipline inside the PG.</li>
+                <li>Create a friendly and peaceful environment so that all residents can live comfortably.</li>
+                <li>Respect other residents and follow common rules.</li>
+                <li>Inform the owner before leaving for places other than college.</li>
+                <li>Follow all PG rules to maintain a safe and comfortable atmosphere for everyone.</li>
+            </ul>
+        </section>
+
+        <!-- ═══ MAPS ═══ -->
+        <section class="card reveal">
+            <div class="card-header">
+                <span class="emoji">🗺️</span> Find Us on Maps
+            </div>
+            <div class="map-card">
+                <iframe
+                    src="https://www.google.com/maps?q=Dulal%20Gogoi%20Girls%20PG&z=16&output=embed"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen
+                    title="Location of Dulal Gogoi Girls PG"
+                ></iframe>
+            </div>
+            <div class="map-link">
+                <a href="https://www.google.com/maps/place/Dulal+Gogoi+Girls+PG/@26.7861293,94.2872603,3a,75y,289.09h,85.19t/data=!3m7!1e1!3m5!1s1h_tDvha7eLPPswXMxLRbA!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D4.80977622517895%26panoid%3D1h_tDvha7eLPPswXMxLRbA%26yaw%3D289.0925634878446!7i13312!8i6656!4m14!1m7!3m6!1s0x3746dd690c56eaa9:0x1f22e97bd3e44f50!2sDulal+Gogoi+Girls+PG!8m2!3d26.7861023!4d94.287015!16s%2Fg%2F11fmp24_1j!3m5!1s0x3746dd690c56eaa9:0x1f22e97bd3e44f50!8m2!3d26.7861023!4d94.287015!16s%2Fg%2F11fmp24_1j?hl=en&authuser=0&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Open in Google Maps
+                </a>
+            </div>
+        </section>
+
+        <!-- ═══ PICTURES ═══ -->
+        <section class="card reveal">
+            <div class="card-header">
+                <span class="emoji">📸</span> Pictures
+            </div>
+            <div class="picture-switcher" role="tablist" aria-label="Picture views">
+                <button class="active" data-view="day" type="button">🌞 Day View</button>
+                <button data-view="night" type="button">🌙 Night View</button>
+            </div>
+            <div class="picture-frame">
+                <img id="galleryImage" src="images/night.png" alt="Dulal Gogoi Girls PG day view" />
+            </div>
+            <div class="picture-caption" id="galleryCaption">Day view of the PG</div>
+        </section>
+
+        <!-- ═══ CONTACT ═══ -->
+        <section class="card reveal">
+            <div class="card-header">
+                <span class="emoji">📞</span> Contact Details
+            </div>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <span class="emoji">📱</span>
+                    <a href="tel:+919678799461" aria-label="Call +91 96787 99461">+91 96787 99461</a>
+                    <span style="font-size:0.85rem;color:#6d5545;">(Call / WhatsApp)</span>
+                </div>
+                <div class="contact-item">
+                    <span class="emoji">📱</span>
+                    <a href="tel:+917896307398" aria-label="Call +91 78963 07398">+91 78963 07398</a>
+                    <span style="font-size:0.85rem;color:#6d5545;">(Call / WhatsApp)</span>
+                </div>
+                <div class="contact-item contact-email">
+                    <span class="emoji">✉️</span>
+                    <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=gogoidulal376@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Open Gmail to email gogoidulal376@gmail.com">gogoidulal376@gmail.com</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ FOOTER ═══ -->
+        <div class="footer">
+            Dulal Gogoi Girls PG &bull; Established June 2016 &bull; Near JIST College
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            reveals.forEach(item => observer.observe(item));
+
+            const image = document.getElementById('galleryImage');
+            const buttons = document.querySelectorAll('.picture-switcher button');
+
+            const captions = {
+                day: 'Day view of the PG',
+                night: 'Night view of the PG'
+            };
+
+            const imageMap = {
+                day: 'images/night.png',
+                night: 'images/day.png'
+            };
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const view = button.getAttribute('data-view');
+                    image.src = imageMap[view];
+                    image.alt = `Dulal Gogoi Girls PG ${view} view`;
+                    document.getElementById('galleryCaption').textContent = captions[view];
+
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
